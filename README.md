@@ -5,6 +5,8 @@ KU-polls will is a free minimal and easy to use web-application for conduct a po
 
 Powered by Python with Django web framework
 
+All of document and material are in  [Wiki page](https://github.com/opxz7148/ku-polls/wiki/home)
 * [Vision and scope](https://github.com/opxz7148/ku-polls/wiki/Vision-&-Scope)
 * [Requirement](/requirements.txt)
+* [Project Plan]()
 
