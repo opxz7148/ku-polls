@@ -67,7 +67,7 @@ def vote(request, question_id):
         selected_choice = question.choice_set.get(  # type: ignore
                 pk=request.POST["choice"]
             )
-        
+
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(
