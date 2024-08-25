@@ -10,3 +10,16 @@ All of document and material are in  [Wiki page](https://github.com/opxz7148/ku-
 * [Requirement](https://github.com/opxz7148/ku-polls/wiki/Requirement)
 * [Project Plan](https://github.com/opxz7148/ku-polls/wiki/Vision-and-Scope)
 
+## Installation
+Install requirement
+`pip install -r requirements.txt`
+
+## Run the web-application
+Change directories to work directories
+```bash
+cd ku-polls
+```
+Initialize server
+```bash
+python manage.py runserver
+```
