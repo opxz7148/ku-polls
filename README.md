@@ -23,7 +23,12 @@ python manage.py runserver
 
 ## Project documentation
 
+### Project Wiki
 All project documents are in the  [Wiki page](../../wiki/Home)
 * [Vision and scope](../../wiki/Vision-and-Scope)
 * [Requirement](../../wiki/Requirement)
 * [Project Plan](../../wiki/Vision-and-Scope)
+
+### Iteration plan
+* [Iteration 1](../../wiki/iteration1)
+* [Iteration 2](../../wiki/iteration1)
