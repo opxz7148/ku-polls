@@ -3,6 +3,7 @@ File for create database model
 """
 
 import datetime
+from turtle import mode
 
 from django.db import models
 from django.utils import timezone
@@ -14,7 +15,8 @@ class Question(models.Model):
     Question model
     """
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField("date published")
+    pub_date = models.DateTimeField("date published", default=timezone.datetime.now)
+    end_date = models.DateTimeField("polls end date", default=None, blank=True, null=True)
 
     def __str__(self) -> str:
         return str(self.question_text)
