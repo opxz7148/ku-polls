@@ -30,5 +30,5 @@ All project documents are in the  [Wiki page](../../wiki/Home)
 * [Project Plan](../../wiki/Vision-and-Scope)
 
 ### Iteration plan
-* [Iteration 1](../../wiki/iteration1)
-* [Iteration 2](../../wiki/iteration1)
+* [Iteration 1](../../wiki/iteration1-plan)
+* [Iteration 2](../../wiki/iteration2-plan)
