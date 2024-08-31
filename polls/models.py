@@ -41,7 +41,29 @@ class Question(models.Model):
         
         now = timezone.now()
         return now >= self.pub_date
+    
+    def is_end(self) -> bool:
+        """Function to tell whether poll are already past end date or not.
 
+        Returns:
+            bool:   False if current time is already pass question end date.
+                    Otherwise return True
+        """
+        
+        if self.end_date is None:
+            return False
+        
+        now = timezone.now()
+        return now > self.end_date
+    
+    def can_vote(self) -> bool:
+        """Function to tell whether this question is available to vote or not.
+
+        Returns:
+            bool: True if able to vote this question, return False otherwise
+        """
+
+        return self.is_published() and (not self.is_end())
 
 class Choice(models.Model):
     """
