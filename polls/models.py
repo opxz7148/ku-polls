@@ -30,6 +30,17 @@ class Question(models.Model):
         """
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+    
+    def is_published(self) -> bool:
+        """Function to tell whether poll are already published or not. 
+
+        Returns:
+            bool:   True if current time is already pass question published date.
+                    Otherwise return False
+        """
+        
+        now = timezone.now()
+        return now >= self.pub_date
 
 
 class Choice(models.Model):
