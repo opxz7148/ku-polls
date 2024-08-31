@@ -7,13 +7,6 @@ Powered by Python with Django web framework
 This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.th).
 
-## Project documentation
-
-All project documents are in the  [Wiki page](../../wiki/Home)
-* [Vision and scope](../../wiki/Vision-and-Scope)
-* [Requirement](../../wiki/Requirement)
-* [Project Plan](../../wiki/Vision-and-Scope)
-
 ## Installation
 Install requirement
 ```pip install -r requirements.txt```
@@ -27,3 +20,10 @@ Initialize server
 ```bash
 python manage.py runserver
 ```
+
+## Project documentation
+
+All project documents are in the  [Wiki page](../../wiki/Home)
+* [Vision and scope](../../wiki/Vision-and-Scope)
+* [Requirement](../../wiki/Requirement)
+* [Project Plan](../../wiki/Vision-and-Scope)
