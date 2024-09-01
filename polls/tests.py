@@ -83,13 +83,43 @@ class QuestionIndexViewTests(TestCase):
         # Create question both in the future and in the past
         past_question1 = create_question("Past question", pub_days=-5)
         past_question2 = create_question("Past question2", pub_days=-10)
-        _ = create_question("Past question2", pub_days=5)
+        _ = create_question("Future question2", pub_days=5)
 
         # Get a response from view
         response = self.client.get(reverse("polls:index"))
         self.assertQuerySetEqual(
             response.context["latest_question_list"],
             [past_question1, past_question2]
+        )
+        
+    def test_past_poll_that_ended_and_not(self):
+        """
+        The question index page must display only published question.
+        """
+        # Create question that published in the past that already ended and not yet
+        past_question_ended = create_question("Past question", pub_days=-5, end_days=-2)
+        past_question_not_ended = create_question("Past question2", pub_days=-5, end_days=5)
+
+        # Get a response from view
+        response = self.client.get(reverse("polls:index"))
+        self.assertQuerySetEqual(
+            response.context["latest_question_list"],
+            [past_question_not_ended, past_question_ended]
+        )
+        
+    def test_future_poll_that_ended_and_not(self):
+        """
+        The question index page must display only published question.
+        """
+        # Create question that published in the future that already ended and not yet
+        future_question_ended = create_question("Past question", pub_days=5, end_days=-2)
+        future_question_not_ended = create_question("Past question2", pub_days=5, end_days=6)
+
+        # Get a response from view
+        response = self.client.get(reverse("polls:index"))
+        self.assertQuerySetEqual(
+            response.context["latest_question_list"],
+            []
         )
 
 

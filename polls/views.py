@@ -2,7 +2,9 @@
 Module for render and response a request
 """
 
+from typing import Any
 from django.db.models import F
+from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -24,7 +26,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.all().order_by("-pub_date")
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")
 
 
 class DetailView(generic.DetailView):
@@ -38,7 +40,7 @@ class DetailView(generic.DetailView):
         """
         Excludes any questions that aren't published yet.
         """
-        return Question.objects.filter(pub_date__lte=timezone.now())
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")
 
 
 class ResultsView(generic.DetailView):

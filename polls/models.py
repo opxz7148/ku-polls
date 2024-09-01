@@ -31,7 +31,6 @@ class Question(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
     
-    @property
     def is_published(self) -> bool:
         """Function to tell whether poll are already published or not. 
 
@@ -57,7 +56,6 @@ class Question(models.Model):
         now = timezone.now()
         return now > self.end_date
     
-    @property
     def can_vote(self) -> bool:
         """Function to tell whether this question is available to vote or not.
 
