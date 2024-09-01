@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib import messages
 
 from .models import Choice, Question
 
@@ -35,12 +36,16 @@ class DetailView(generic.DetailView):
     """
     model = Question
     template_name = "polls/detail.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+                
+        question = self.get_object()
 
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")
+        if question.is_published():
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(request, "Polls is unavailable right now")
+            return HttpResponseRedirect(reverse("polls:index"), request)
 
 
 class ResultsView(generic.DetailView):
@@ -49,6 +54,16 @@ class ResultsView(generic.DetailView):
     """
     model = Question
     template_name = "polls/results.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+                
+        question = self.get_object()
+
+        if question.is_published():
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(request, "Polls is unavailable right now")
+            return HttpResponseRedirect(reverse("polls:index"), request)
 
 
 def vote(request, question_id):

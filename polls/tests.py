@@ -141,7 +141,7 @@ class QuestionDetailViewTests(TestCase):
                 args=(future_question.id,)  # type: ignore
             )
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
 
     def test_past_question(self):
         """

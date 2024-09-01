@@ -5,3 +5,8 @@ li a {
 body {
     background: white url("images/stone-wall.jpg") no-repeat;
 }
+
+.messages
+{
+    color: red;
+}
