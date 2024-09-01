@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib import messages
 
 from .models import Choice, Question
 
@@ -26,7 +27,7 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Question.objects.filter(
             pub_date__lte=timezone.now()
-        ).order_by("-pub_date")[:5]
+        ).order_by("-pub_date")
 
 
 class DetailView(generic.DetailView):
@@ -36,11 +37,23 @@ class DetailView(generic.DetailView):
     model = Question
     template_name = "polls/detail.html"
 
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now())
+    def dispatch(self, request, *args, **kwargs):
+
+        question = self.get_object()
+
+        if question.is_published():
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(request, "Polls is unavailable right now")
+            return HttpResponseRedirect(reverse("polls:index"), request)
+
+    def get_context_data(self, **kwargs):
+        # get the default context data
+        context = super().get_context_data(**kwargs)
+        # add extra field to the context
+        context['can_vote'] = self.get_object().can_vote()
+        print(context)
+        return context
 
 
 class ResultsView(generic.DetailView):
@@ -49,6 +62,16 @@ class ResultsView(generic.DetailView):
     """
     model = Question
     template_name = "polls/results.html"
+
+    def dispatch(self, request, *args, **kwargs):
+
+        question = self.get_object()
+
+        if question.is_published():
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(request, "Polls is unavailable right now")
+            return HttpResponseRedirect(reverse("polls:index"), request)
 
 
 def vote(request, question_id):
@@ -63,6 +86,11 @@ def vote(request, question_id):
         django.http.HttpResponse: http response with rendered content
     """
     question = get_object_or_404(Question, pk=question_id)
+
+    if not question.is_published():
+        messages.warning(request, "Polls is unavailable right now")
+        return HttpResponseRedirect(reverse("polls:index"), request)
+
     try:
         selected_choice = question.choice_set.get(  # type: ignore
                 pk=request.POST["choice"]

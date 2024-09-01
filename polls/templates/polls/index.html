@@ -1,13 +1,31 @@
-{% load static %}
+{% extends "polls/layout.html" %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+{% block title %}Polls{% endblock title %}
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %} 
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% block content %}
+    {% load static %}
+
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <h2 class="messages">{{ message }}</h2>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if latest_question_list %}
+            {% for question in latest_question_list %}
+                <div class="card my-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{question.question_text}}</h5>
+                        <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary">View</a>
+                        <a href="{% url 'polls:results' question.id %}" class="btn btn-primary">Results</a>
+                    </div>
+                </div>
+            {% endfor %} 
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
+
+{% endblock content %}
