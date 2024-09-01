@@ -1,5 +1,7 @@
 # Polls web-application for KU community.
 
+![Flake8 Status](./flake8-badge.svg)
+
 KU-polls is a free minimal and easy to use web-application for conduct a poll or a surveys base on [Django Tutorial](https://docs.djangoproject.com/en/5.1/intro/tutorial01/). You're able to create and conduct a new poll with a start and expire date for each poll. ku-polls also collect a response data and summarize it for you.
 
 Powered by Python with Django web framework
@@ -16,6 +18,34 @@ Change directories to work directories
 ```bash
 cd ku-polls
 ```
+
+Migrate database
+```
+python manage.py makemigrations
+```
+```
+python manage.py migrate
+```
+
+Load data into database
+```
+python manage.py loaddata data/polls-v2.json
+```
+
+Configs
+
+Get django secret key by run
+```
+python get_secret_key.py
+```
+
+paste it in [sample.env](./sample.env)
+
+rename sample.env to .env
+```
+mv sample.env .env
+```
+
 Initialize server
 ```bash
 python manage.py runserver

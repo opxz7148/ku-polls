@@ -2,9 +2,7 @@
 Module for render and response a request
 """
 
-from typing import Any
 from django.db.models import F
-from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -27,7 +25,9 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")
+        return Question.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by("-pub_date")
 
 
 class DetailView(generic.DetailView):
@@ -36,9 +36,9 @@ class DetailView(generic.DetailView):
     """
     model = Question
     template_name = "polls/detail.html"
-    
+
     def dispatch(self, request, *args, **kwargs):
-                
+
         question = self.get_object()
 
         if question.is_published():
@@ -46,13 +46,14 @@ class DetailView(generic.DetailView):
         else:
             messages.warning(request, "Polls is unavailable right now")
             return HttpResponseRedirect(reverse("polls:index"), request)
-        
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs) # get the default context data
-        context['can_vote'] = self.get_object().can_vote() # add extra field to the context
-        print(context)
-        return context 
 
+    def get_context_data(self, **kwargs):
+        # get the default context data
+        context = super().get_context_data(**kwargs)
+        # add extra field to the context
+        context['can_vote'] = self.get_object().can_vote()
+        print(context)
+        return context
 
 
 class ResultsView(generic.DetailView):
@@ -61,9 +62,9 @@ class ResultsView(generic.DetailView):
     """
     model = Question
     template_name = "polls/results.html"
-    
+
     def dispatch(self, request, *args, **kwargs):
-                
+
         question = self.get_object()
 
         if question.is_published():
@@ -71,7 +72,7 @@ class ResultsView(generic.DetailView):
         else:
             messages.warning(request, "Polls is unavailable right now")
             return HttpResponseRedirect(reverse("polls:index"), request)
-    
+
 
 def vote(request, question_id):
     """ Function responsible to update number of vote after user has voted
@@ -85,11 +86,11 @@ def vote(request, question_id):
         django.http.HttpResponse: http response with rendered content
     """
     question = get_object_or_404(Question, pk=question_id)
-    
+
     if not question.is_published():
         messages.warning(request, "Polls is unavailable right now")
         return HttpResponseRedirect(reverse("polls:index"), request)
-    
+
     try:
         selected_choice = question.choice_set.get(  # type: ignore
                 pk=request.POST["choice"]

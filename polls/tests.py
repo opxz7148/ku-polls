@@ -12,20 +12,29 @@ from .models import Question
 # Create your tests here.
 
 
-def create_question(question_text: str="Test Question", pub_days: int=0, end_days: int=None) -> Question:
+def create_question(
+    question_text: str = "Test Question",
+    pub_days: int = 0,
+    end_days: int = None
+) -> Question:
+
     """
     Create a question with the given `question_text` and published the
     given number of `days` offset to now (negative for questions published
     in the past, positive for questions that have yet to be published).
     """
     pub_date = timezone.now() + datetime.timedelta(days=pub_days)
-    
+
     if end_days is None:
         end_date = end_days
     else:
         end_date = timezone.now() + datetime.timedelta(days=end_days)
-    
-    return Question.objects.create(question_text=question_text, pub_date=pub_date, end_date=end_date)
+
+    return Question.objects.create(
+        question_text=question_text,
+        pub_date=pub_date,
+        end_date=end_date
+    )
 
 
 class QuestionIndexViewTests(TestCase):
@@ -68,8 +77,12 @@ class QuestionIndexViewTests(TestCase):
         """
         The questions index page may display multiple questions.
         """
-        question1 = create_question(question_text="Past question 1.", pub_days=-30)
-        question2 = create_question(question_text="Past question 2.", pub_days=-5)
+        question1 = create_question(
+            question_text="Past question 1.", pub_days=-30
+        )
+        question2 = create_question(
+            question_text="Past question 2.", pub_days=-5
+        )
         response = self.client.get(reverse("polls:index"))
         self.assertQuerySetEqual(
             response.context["latest_question_list"],
@@ -91,14 +104,19 @@ class QuestionIndexViewTests(TestCase):
             response.context["latest_question_list"],
             [past_question1, past_question2]
         )
-        
+
     def test_past_poll_that_ended_and_not(self):
         """
         The question index page must display only published question.
         """
-        # Create question that published in the past that already ended and not yet
-        past_question_ended = create_question("Past question", pub_days=-5, end_days=-2)
-        past_question_not_ended = create_question("Past question2", pub_days=-5, end_days=5)
+        # Create question that published in the past
+        # that already ended and not yet
+        past_question_ended = create_question(
+            "Past question", pub_days=-5, end_days=-2
+        )
+        past_question_not_ended = create_question(
+            "Past question2", pub_days=-5, end_days=5
+        )
 
         # Get a response from view
         response = self.client.get(reverse("polls:index"))
@@ -106,7 +124,7 @@ class QuestionIndexViewTests(TestCase):
             response.context["latest_question_list"],
             [past_question_not_ended, past_question_ended]
         )
-        
+
     def test_future_poll_that_ended_and_not(self):
         """
         The question index page must display only published question.
@@ -155,8 +173,8 @@ class QuestionDetailViewTests(TestCase):
         url = reverse("polls:detail", args=(past_question.id,))  # type: ignore
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
-        
-        
+
+
 class QuestionModelTests(TestCase):
     """
     Test case for Question model.
@@ -197,109 +215,114 @@ class QuestionModelTests(TestCase):
         """
         Is published must return true if publish date is in the past
         """
-        
+
         # Create question with published day is in the past
         q = create_question(pub_days=-1)
         self.assertTrue(q.is_published())
-        
+
     def test_is_published_with_future_pub_date(self):
         """
         Is published must return false if publish date is in the future
         """
-        
+
         # Create question with published day is in the past
-        q = create_question(pub_days=1) 
+        q = create_question(pub_days=1)
         self.assertFalse(q.is_published())
-        
+
     def test_is_published_with_today_pub_date(self):
         """
         Is published must return True if publish date is today
         """
-        
+
         # Create question with published day is today
         q = create_question()
         self.assertTrue(q.is_published())
-        
+
     def test_is_end_with_past_end_date(self):
         """
         is_end must return True if end date is in the past
         """
-        
+
         # Create question with end day is today
         q = create_question(end_days=-1)
         self.assertTrue(q.is_end())
-        
+
     def test_is_end_with_future_end_date(self):
         """
         is_end must return False if end date is in the future
         """
-        
+
         # Create question with end day is in the future
         q = create_question(end_days=1)
         self.assertFalse(q.is_end())
-    
+
     def test_is_end_with_today_end_date(self):
         """
         is_end must return True if end date is today
         """
-        
+
         # Create question with end day is today
         q = create_question(end_days=0)
         self.assertTrue(q.is_end())
-        
+
     def test_can_vote_with_pub_date_in_the_past_without_end_date(self):
         """
-        can_vote must return True when their are no end_date and pub_date in the past
+        can_vote must return True when their are
+        no end_date and pub_date in the past
         """
         q = create_question(pub_days=-1)
         self.assertTrue(q.can_vote())
-        
+
     def test_can_vote_with_pub_date_in_the_future_without_end_date(self):
         """
-        can_vote must return False when their are no end_date and pub_date in the past
+        can_vote must return False when their are
+        no end_date and pub_date in the past
         """
         q = create_question(pub_days=1)
         self.assertFalse(q.can_vote())
-    
+
     def test_can_vote_with_pub_date_is_today_without_end_date(self):
         """
-        can_vote must return True when their are no end_date and pub_date is today
+        can_vote must return True when their are
+        no end_date and pub_date is today
         """
         q = create_question()
         self.assertTrue(q.can_vote())
-        
+
     def test_can_vote_with_pub_date_and_end_date_in_the_future(self):
         """
         can_vote must return False when their are end_date and pub_date in the future
         """
         q = create_question(pub_days=1, end_days=2)
         self.assertFalse(q.can_vote())
-        
+
     def test_can_vote_with_pub_date_and_end_date_in_the_past(self):
         """
-        can_vote must return False when their are end_date and pub_date in the past
+        can_vote must return False when their are
+        end_date and pub_date in the past
         """
         q = create_question(pub_days=-2, end_days=-1)
         self.assertFalse(q.can_vote())
-        
+
     def test_can_vote_with_pub_date_in_the_past_and_end_date_in_the_future(self):
         """
-        can_vote must return True when their are end_date in the future and pub_date in the past
+        can_vote must return True when their are
+        end_date in the future and pub_date in the past
         """
         q = create_question(pub_days=-2, end_days=2)
         self.assertTrue(q.can_vote())
-        
+
     def test_can_vote_with_pub_date_in_the_future_and_end_date_in_the_past(self):
         """
-        can_vote must return False when their are end_date in the past and pub_date in the future
+        can_vote must return False when their are
+        end_date in the past and pub_date in the future
         """
         q = create_question(pub_days=2, end_days=-2)
         self.assertFalse(q.can_vote())
-    
+
     def test_can_vote_with_pub_date_and_end_date_is_today(self):
         """
         can_vote must return True when their are end_date and pub_date is today
         """
         q = create_question(pub_days=0, end_days=0)
         self.assertFalse(q.can_vote())
-    
