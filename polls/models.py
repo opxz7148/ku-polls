@@ -31,6 +31,7 @@ class Question(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
     
+    @property
     def is_published(self) -> bool:
         """Function to tell whether poll are already published or not. 
 
