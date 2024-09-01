@@ -46,6 +46,13 @@ class DetailView(generic.DetailView):
         else:
             messages.warning(request, "Polls is unavailable right now")
             return HttpResponseRedirect(reverse("polls:index"), request)
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs) # get the default context data
+        context['can_vote'] = self.get_object().can_vote() # add extra field to the context
+        print(context)
+        return context 
+
 
 
 class ResultsView(generic.DetailView):
@@ -64,7 +71,7 @@ class ResultsView(generic.DetailView):
         else:
             messages.warning(request, "Polls is unavailable right now")
             return HttpResponseRedirect(reverse("polls:index"), request)
-
+    
 
 def vote(request, question_id):
     """ Function responsible to update number of vote after user has voted
@@ -78,6 +85,11 @@ def vote(request, question_id):
         django.http.HttpResponse: http response with rendered content
     """
     question = get_object_or_404(Question, pk=question_id)
+    
+    if not question.is_published():
+        messages.warning(request, "Polls is unavailable right now")
+        return HttpResponseRedirect(reverse("polls:index"), request)
+    
     try:
         selected_choice = question.choice_set.get(  # type: ignore
                 pk=request.POST["choice"]
