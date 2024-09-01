@@ -1,9 +1,18 @@
 li a {
-    color: white;
+    color: black;
+}
+
+html {
+    background: url("images/stone-wall.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
 }
 
 body {
-    background: white url("images/stone-wall.jpg") no-repeat;
+    background-color: transparent !important; 
 }
 
 .messages
