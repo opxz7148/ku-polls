@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import Choice, Question
 
@@ -73,7 +74,7 @@ class ResultsView(generic.DetailView):
             messages.warning(request, "Polls is unavailable right now")
             return HttpResponseRedirect(reverse("polls:index"), request)
 
-
+@login_required
 def vote(request, question_id):
     """ Function responsible to update number of vote after user has voted
 
