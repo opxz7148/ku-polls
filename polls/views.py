@@ -9,8 +9,9 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 
 # Create your views here.
 
@@ -73,7 +74,7 @@ class ResultsView(generic.DetailView):
             messages.warning(request, "Polls is unavailable right now")
             return HttpResponseRedirect(reverse("polls:index"), request)
 
-
+@login_required
 def vote(request, question_id):
     """ Function responsible to update number of vote after user has voted
 
@@ -106,12 +107,31 @@ def vote(request, question_id):
                 "error_message": "You didn't select a choice.",
             },
         )
-    else:
-        selected_choice.votes = F("votes") + 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(
-                reverse("polls:results", args=(question.id,))  # type: ignore
+
+    # Get current user
+    this_user = request.user
+    
+    try:
+        # Get vote from this user that vote to this question
+        vote = this_user.vote_set.get(choice__question=question)
+        
+        # If user selected same choice, do nothing
+        if vote.choice != selected_choice:
+            
+            # Otherwise change selected choice
+            vote.choice = selected_choice
+            vote.save()
+            
+    except Vote.DoesNotExist:    
+        
+        # If user hasn't vote yet just insert a new vote to model
+        Vote.objects.create(user=this_user, choice=selected_choice)
+    
+    
+    # Always return an HttpResponseRedirect after successfully dealing
+    # with POST data. This prevents data from being posted twice if a
+    # user hits the Back button.
+    messages.warning(request, "You haven't select a choice")
+    return HttpResponseRedirect(
+            reverse("polls:results", args=(question.id,))  # type: ignore
             )
