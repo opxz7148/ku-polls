@@ -1,4 +1,4 @@
-{% extends "polls/layout.html" %}
+{% extends "base/base.html" %}
 
 {% block title %}
     {{ question.question_text  }}
@@ -6,6 +6,9 @@
 
 {% block content %}
     <div class="container-fluid bg-white my-4 p-4">
+
+        {% include "base/message.html" %}
+
         <form action="{% url 'polls:vote' question.id %}" method="post">
 
             {% csrf_token %}
@@ -17,9 +20,9 @@
                     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
                     <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
                 {% endfor %}
-                {% if can_vote %}
-                <input type="submit" value="Vote" class="my-3">
-                {% endif %}
+
+                <input type="submit" value="Vote" class="my-3 btn btn-primary">
+
             </div>
 
         </form>

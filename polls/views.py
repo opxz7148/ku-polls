@@ -2,7 +2,10 @@
 Module for render and response a request
 """
 
+from typing import Any
 from django.db.models import F
+from django.db.models.base import Model as Model
+from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -39,23 +42,22 @@ class DetailView(generic.DetailView):
     template_name = "polls/detail.html"
 
     def dispatch(self, request, *args, **kwargs):
+        
+        print('dispatch got call')
 
-        question = self.get_object()
+        try: 
+            question = self.get_object()
+        except:
+            messages.warning(request, "Polls is unavailable right now")
+            return HttpResponseRedirect(reverse("polls:index"), request)
+
 
         if question.is_published():
             return super().dispatch(request, *args, **kwargs)
         else:
             messages.warning(request, "Polls is unavailable right now")
             return HttpResponseRedirect(reverse("polls:index"), request)
-
-    def get_context_data(self, **kwargs):
-        # get the default context data
-        context = super().get_context_data(**kwargs)
-        # add extra field to the context
-        context['can_vote'] = self.get_object().can_vote()
-        print(context)
-        return context
-
+        
 
 class ResultsView(generic.DetailView):
     """
@@ -98,14 +100,13 @@ def vote(request, question_id):
             )
 
     except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(
-            request,
-            "polls/detail.html",
-            {
-                "question": question,
-                "error_message": "You didn't select a choice.",
-            },
+    
+        # Warn user if they doesn't select any choice
+        messages.warning(request, "You haven't select the choice")
+        
+        # Redirect user back to question detail with a message 
+        return HttpResponseRedirect(
+            reverse("polls:detail", args=(question.id,))
         )
 
     # Get current user
@@ -131,7 +132,6 @@ def vote(request, question_id):
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a
     # user hits the Back button.
-    messages.warning(request, "You haven't select a choice")
     return HttpResponseRedirect(
             reverse("polls:results", args=(question.id,))  # type: ignore
             )
