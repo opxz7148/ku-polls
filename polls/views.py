@@ -43,8 +43,6 @@ class DetailView(generic.DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         
-        print('dispatch got call')
-
         try: 
             question = self.get_object()
         except:
@@ -58,6 +56,29 @@ class DetailView(generic.DetailView):
             messages.warning(request, "Polls is unavailable right now")
             return HttpResponseRedirect(reverse("polls:index"), request)
         
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        
+        # Get original context
+        context = super().get_context_data(**kwargs)
+        
+        # Get current user
+        this_user = self.request.user
+        
+        # Get selected question
+        question = self.get_object()
+        
+        try:
+            # Try to got vote that got vote by this user
+            previous_vote = this_user.vote_set.get(
+                user=this_user, 
+                choice__question=question
+            )
+        except Vote.DoesNotExist:
+            previous_vote = None
+                        
+        context['previous_selected_id'] = previous_vote.choice.id
+            
+        return context
 
 class ResultsView(generic.DetailView):
     """
