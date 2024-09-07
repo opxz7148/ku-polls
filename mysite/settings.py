@@ -107,7 +107,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_REDIRECT_URL = 'polls:index'  # after login, show list of polls
-LOGOUT_REDIRECT_URL = 'login'       # after logout, return to login page
+LOGOUT_REDIRECT_URL = 'polls:index'       # after logout, return to login page
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -130,3 +130,31 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+    
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+            "level": "DEBUG",
+            "formatter": "simple",
+        },
+    },
+    
+    "loggers": {
+        "": {
+            "level": "DEBUG",
+            "handlers": ["file"],
+        },
+    },
+    
+    "formatters": {
+        "simple": {
+            "format": "{asctime} {module} {levelname} {message}",
+            "style": "{",
+        },
+    },
+}

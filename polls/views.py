@@ -1,7 +1,7 @@
 """
 Module for render and response a request
 """
-
+import logging
 from typing import Any
 from django.db.models import F
 from django.db.models.base import Model as Model
@@ -13,10 +13,31 @@ from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
+from django.dispatch import receiver
 
 from .models import Choice, Question, Vote
 
 # Create your views here.
+
+logger = logging.getLogger('polls')
+
+@receiver(user_logged_in)
+def user_logged_in_callback(sender, request, user, **kwargs):    
+    ip = request.META.get('REMOTE_ADDR')
+
+    logger.info(f'login user: {user} via ip: {ip}')
+    
+@receiver(user_logged_out)
+def user_logged_out_callback(sender, request, user, **kwargs): 
+    ip = request.META.get('REMOTE_ADDR')
+
+    logger.info(f'logout user: {user} via ip: {ip}')
+
+
+@receiver(user_login_failed)
+def user_login_failed_callback(sender, credentials, **kwargs):
+    logger.warning(f'login failed for: {credentials}')
 
 
 class IndexView(generic.ListView):
