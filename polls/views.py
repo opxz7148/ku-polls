@@ -67,16 +67,16 @@ class DetailView(generic.DetailView):
         # Get selected question
         question = self.get_object()
         
-        try:
-            # Try to got vote that got vote by this user
-            previous_vote = this_user.vote_set.get(
-                user=this_user, 
-                choice__question=question
-            )
-        except Vote.DoesNotExist:
-            previous_vote = None
-                        
-        context['previous_selected_id'] = previous_vote.choice.id
+        if this_user.is_authenticated:
+            try:
+                # Try to got vote that got vote by this user
+                previous_vote = this_user.vote_set.get(
+                    user=this_user, 
+                    choice__question=question
+                )
+                context['previous_selected_id'] = previous_vote.choice.id
+            except Vote.DoesNotExist:
+                context["previous_selected_id"] = None                        
             
         return context
 
@@ -140,14 +140,22 @@ def vote(request, question_id):
         # If user selected same choice, do nothing
         if vote.choice != selected_choice:
             
+            previous_choice = vote.choice.choice_text
+            
             # Otherwise change selected choice
             vote.choice = selected_choice
             vote.save()
+            
+            # Visual confirmation to user that their change already got recorded
+            messages.success(request, f"You have change your voted from {previous_choice} to {selected_choice.choice_text}")
             
     except Vote.DoesNotExist:    
         
         # If user hasn't vote yet just insert a new vote to model
         Vote.objects.create(user=this_user, choice=selected_choice)
+        
+        # Visual confirmation to user that their vote already got recorded
+        messages.success(request, f"Your vote for {selected_choice.choice_text} has been updated")
     
     
     # Always return an HttpResponseRedirect after successfully dealing
