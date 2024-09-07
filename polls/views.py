@@ -144,7 +144,7 @@ def vote(request, question_id):
         question = get_object_or_404(Question, pk=question_id)
     except Question.DoesNotExist as err:
         
-        # logger.exception(f"Non-existent question {question_id} %s", err)
+        logger.exception(f"Non-existent question {question_id} %s", err)
         
         messages.warning(request, "Polls does not exist")
         return HttpResponseRedirect(reverse("polls:index"), request)
@@ -157,11 +157,26 @@ def vote(request, question_id):
         selected_choice = question.choice_set.get(  # type: ignore
                 pk=request.POST["choice"]
             )
-
-    except (KeyError, Choice.DoesNotExist):
+    except KeyError as err:
     
         # Warn user if they doesn't select any choice
         messages.warning(request, "You haven't select the choice")
+        
+        # Log an exception
+        logger.exception(f"User {request.user.username} doesn't select a choice %s", err)
+        
+        # Redirect user back to question detail with a message 
+        return HttpResponseRedirect(
+            reverse("polls:detail", args=(question.id,))
+        )
+        
+    except Choice.DoesNotExist as err:
+        
+        # Warn user if they select a choice from different polls
+        messages.warning(request, "You have selected a invalid choice")
+        
+        # Log an exception
+        logger.exception(f"User {request.user.username} select invalid choice %s", err)
         
         # Redirect user back to question detail with a message 
         return HttpResponseRedirect(
@@ -174,23 +189,29 @@ def vote(request, question_id):
     try:
         # Get vote from this user that vote to this question
         vote = this_user.vote_set.get(choice__question=question)
-        
+        previous_choice = vote.choice.choice_text
+
         # If user selected same choice, do nothing
         if vote.choice != selected_choice:
-            
-            previous_choice = vote.choice.choice_text
-            
+                        
             # Otherwise change selected choice
             vote.choice = selected_choice
             vote.save()
             
-            # Visual confirmation to user that their change already got recorded
-            messages.success(request, f"You have change your voted from {previous_choice} to {selected_choice.choice_text}")
+        # Log user vote
+        logger.info(f"User {request.user.username} change vote from {previous_choice} to {selected_choice.choice_text} for question {question.question_text}")
+        
+        # Visual confirmation to user that their change already got recorded
+        messages.success(request, f"You have change your voted from {previous_choice} to {selected_choice.choice_text}")
             
-    except Vote.DoesNotExist:    
+    except Vote.DoesNotExist as err:    
         
         # If user hasn't vote yet just insert a new vote to model
         Vote.objects.create(user=this_user, choice=selected_choice)
+        
+        # Log user vote
+        logger.exception(f"User {request.user.username} never vote for question {question.question_text} %s", err)
+        logger.info(f"User {request.user.username} has vote {selected_choice.choice_text} for question {question.question_text}")
         
         # Visual confirmation to user that their vote already got recorded
         messages.success(request, f"Your vote for {selected_choice.choice_text} has been updated")
