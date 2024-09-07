@@ -26,6 +26,15 @@
                 <div class="card my-3" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">{{question.question_text}}</h5>
+                        {% if question.available %}
+                        <div class="alert alert-success" role="alert">
+                            Polls available  
+                        </div>
+                        {% else %}
+                        <div class="alert alert-danger" role="alert">
+                            Polls unavailable  
+                        </div>
+                        {% endif %}
                         <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary">View</a>
                         <a href="{% url 'polls:results' question.id %}" class="btn btn-primary">Results</a>
                     </div>
