@@ -22,18 +22,26 @@ from .models import Choice, Question, Vote
 
 logger = logging.getLogger('polls')
 
+def get_client_ip(request):
+    """Get the visitor’s IP address using request headers."""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip 
+
 @receiver(user_logged_in)
 def user_logged_in_callback(sender, request, user, **kwargs):    
-    ip = request.META.get('REMOTE_ADDR')
+    ip = get_client_ip(request)
 
     logger.info(f'login user: {user} via ip: {ip}')
     
 @receiver(user_logged_out)
 def user_logged_out_callback(sender, request, user, **kwargs): 
-    ip = request.META.get('REMOTE_ADDR')
+    ip = get_client_ip(request)
 
     logger.info(f'logout user: {user} via ip: {ip}')
-
 
 @receiver(user_login_failed)
 def user_login_failed_callback(sender, credentials, **kwargs):
@@ -130,7 +138,16 @@ def vote(request, question_id):
     Returns:
         django.http.HttpResponse: http response with rendered content
     """
-    question = get_object_or_404(Question, pk=question_id)
+    
+    # Check does question exist or not
+    try:
+        question = get_object_or_404(Question, pk=question_id)
+    except Question.DoesNotExist as err:
+        
+        # logger.exception(f"Non-existent question {question_id} %s", err)
+        
+        messages.warning(request, "Polls does not exist")
+        return HttpResponseRedirect(reverse("polls:index"), request)
 
     if not question.is_published():
         messages.warning(request, "Polls is unavailable right now")
