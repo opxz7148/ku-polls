@@ -7,8 +7,12 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.test import Client
 
-from .models import Question
+from .models import Question, Choice, Vote
+
 # Create your tests here.
 
 
@@ -35,6 +39,54 @@ def create_question(
         pub_date=pub_date,
         end_date=end_date
     )
+
+def create_dummies_question_and_2_choice(
+    question_text: str = "Test question",
+    pub_days: int = 0,
+    end_days: int = None
+) -> tuple[Question, Choice, Choice]:
+    """
+    Create a dummies question with 2 associates choice
+
+    Args:
+        question_text (str, optional): Question text. Defaults to "Test question".
+        pub_days (int, optional): Number of day until question publish. Defaults to 0.
+        end_days (int, optional): Number of day until question end. Defaults to None.
+
+    Returns: tuple of question and it 2 choice in order
+        Question, Choice, Choice
+    """
+    q = create_question(question_text, pub_days, end_days)
+    c1 = q.choice_set.create(choice_text="choice1")
+    c2 = q.choice_set.create(choice_text="choice2")
+    
+    return q, c1, c2
+        
+def create_user(username="tester", password="hackmepls") -> User:
+    """Create tester user where their name is tester and hackmepls as a password
+
+    Args:
+        username (str, optional): Defaults to "tester".
+        password (str, optional): Defaults to "hackmepls".
+    return:
+        User : User object
+    """
+    return User.objects.create(username=username, password=password)
+    
+def user_vote(client: Client, choice: Choice) -> HttpResponse:
+    """
+    Make user vote to certain choice
+
+    Args:
+        user (User): User that going to vote
+        choice (Choice): Choice that user going to vote for
+
+    """
+    url = reverse("polls:vote", args=(choice.question.id,))
+        
+    response = client.post(url, {"choice": choice.id})
+    
+    return response
 
 
 class QuestionIndexViewTests(TestCase):
@@ -173,6 +225,131 @@ class QuestionDetailViewTests(TestCase):
         url = reverse("polls:detail", args=(past_question.id,))  # type: ignore
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+    def test_authorized_user_must_able_to_visit_question_that_they_have_not_vote_yet(self):
+        
+        question, _, _ = create_dummies_question_and_2_choice()
+        user = create_user()
+        
+        self.client.force_login(user)
+        
+        res = self.client.get(reverse("polls:detail", args=(question.id,)))
+        
+        self.assertEqual(res.status_code, 200)
+        
+    def test_user_prev_choice_must_got_preselected(self):
+        
+        question, c1, _ = create_dummies_question_and_2_choice()
+        user = create_user()
+        
+        self.client.force_login(user)
+        
+        user_vote(self.client, c1)
+        
+        res = self.client.get(reverse("polls:detail", args=(question.id,)))
+        
+        self.assertContains(res, f'value="{c1.id}" checked')
+
+class VotingTest(TestCase):
+    """
+    Test voting behavior
+    """
+    
+    def test_only_authorized_user_can_vote(self):
+        
+        dummies_question, dummies_choice1, _ = create_dummies_question_and_2_choice()
+        
+        # url = reverse("polls:vote", args=(dummies_question.id,))
+        
+        # response = self.client.post(url, {"choice": dummies_choice1.id})
+        
+        response = user_vote(self.client, dummies_choice1)
+                
+        self.assertRedirects(
+            response,
+            expected_url=f"/accounts/login/?next=/polls/{dummies_question.id}/vote/"
+        )
+        
+    def test_authorized_user_can_vote(self):
+        """
+        Authorized user should be able to voted and vote result should be updated
+        """
+        user = create_user()
+        self.client.force_login(user)
+        
+        _, dummies_choice1, _ = create_dummies_question_and_2_choice()
+        
+        prev_vote_count = dummies_choice1.vote_set.count()
+                
+        user_vote(self.client, dummies_choice1)
+        
+        new_vote_count = dummies_choice1.vote_set.count()
+
+        self.assertEqual(prev_vote_count + 1, new_vote_count)        
+        
+    def test_authorized_user_can_change_vote(self):
+        """
+        Authorized user should be able to change their voted and vote result should be updated
+        """
+        
+        user = create_user()
+        self.client.force_login(user)
+        
+        _, dummies_choice1, dummies_choice2 = create_dummies_question_and_2_choice()
+        
+        user_vote(self.client, dummies_choice1)
+        
+        self.assertEqual(dummies_choice1.vote_set.count(), 1)
+        self.assertEqual(dummies_choice2.vote_set.count(), 0)
+        
+        user_vote(self.client, dummies_choice2)
+        
+        self.assertEqual(dummies_choice1.vote_set.count(), 0)
+        self.assertEqual(dummies_choice2.vote_set.count(), 1)
+        
+    def test_multiple_user_vote(self):
+        """
+        Test case where multiple user has login and vote on the same polls and same question
+        """
+        
+        user1 = create_user("tester1")
+        user2 = create_user("tester2")
+        
+        _, dummies_choice1, dummies_choice2 = create_dummies_question_and_2_choice()
+        
+        self.client.force_login(user1)
+        user_vote(self.client, dummies_choice1)
+        
+        self.assertEqual(dummies_choice1.vote_set.count(), 1)
+        self.assertEqual(dummies_choice2.vote_set.count(), 0)
+        
+        self.client.logout
+        
+        self.client.force_login(user2)
+        user_vote(self.client, dummies_choice1)
+        
+        self.assertEqual(dummies_choice1.vote_set.count(), 2)
+        self.assertEqual(dummies_choice2.vote_set.count(), 0)
+        
+        user_vote(self.client, dummies_choice2)
+        
+        self.assertEqual(dummies_choice1.vote_set.count(), 1)
+        self.assertEqual(dummies_choice2.vote_set.count(), 1)
+        
+        self.client.logout
+        
+        self.client.force_login(user1)
+        user_vote(self.client, dummies_choice2)
+        
+        self.assertEqual(dummies_choice1.vote_set.count(), 0)
+        self.assertEqual(dummies_choice2.vote_set.count(), 2)
+        
+
+
+class QuestionResultViewTests(TestCase):
+    """
+    Test case for question result page
+    """
 
 
 class QuestionModelTests(TestCase):
