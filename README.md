@@ -51,6 +51,13 @@ Initialize server
 python manage.py runserver
 ```
 
+## demo user
+| username | password | 
+|-------|-------| 
+| demo1 | hackme11 | 
+| demo2 | hackme22 | 
+| demo3 | hackme33 |
+
 ## Project documentation
 
 ### Project Wiki
