@@ -10,7 +10,19 @@
         <link rel="stylesheet" href="{% static 'polls/style.css' %}">
         <nav class="navbar navbar-light bg-light fixed-top">
             <div class="container-fluid">
-              <span class="navbar-brand mb-0 h1"><h1>KU-Polls</h1></span>
+              <span class="navbar-brand mb-0 h1 m-2"><h1>KU-Polls</h1></span>
+
+              {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method='post'>
+                  {% csrf_token %}
+                  <div class="row">
+                    <h5 class="col m-1">{{user.username}}</h5>
+                    <button type="submit" class="btn btn-danger col mx-3">Logout</button>
+                  </div>
+                </form>   
+              {% endif %}
+              
+
             </div>
         </nav>
     </head>
