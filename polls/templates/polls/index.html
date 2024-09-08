@@ -8,11 +8,11 @@
         {% include "base/message.html" %}
 
         {% if latest_question_list %}
-        <div class="container text-center my-3">
+        <div class="container text-left my-3">
             <div class="row row-cols-4">
                 {% for question in latest_question_list %}
                     <div class="col mt-5 mb-0">
-                        <div class="card h-100 py-3 " style="width: 18rem;">
+                        <div class="card h-100 py-3" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title y-100">{{question.question_text}}</h5>
                                 {% if question.available %}

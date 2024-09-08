@@ -26,7 +26,7 @@
             </div>
 
         </form>
-        <a href="{% url 'polls:results' question.id%}"><button>View results</button></a>
-        <a href="{% url 'polls:index'%}" class="mx-3"><button>Back to poll list</button></a>
+        <a href="{% url 'polls:results' question.id%}"><button class="btn btn-primary">View results</button></a>
+        <a href="{% url 'polls:index'%}" class="mx-3"><button class="btn btn-primary">Back to poll list</button></a>
     </div>
 {% endblock content %}
