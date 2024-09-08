@@ -29,7 +29,10 @@ python manage.py migrate
 
 Load data into database
 ```
-python manage.py loaddata data/polls-v2.json
+python manage.py loaddata data/polls-v3.json
+```
+```
+python manage.py loaddata data/users.json
 ```
 
 Configs
