@@ -8,24 +8,30 @@
         {% include "base/message.html" %}
 
         {% if latest_question_list %}
-            {% for question in latest_question_list %}
-                <div class="card my-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{question.question_text}}</h5>
-                        {% if question.available %}
-                            <div class="alert alert-success" role="alert">
-                                Polls available  
+        <div class="container text-center my-3">
+            <div class="row row-cols-4">
+                {% for question in latest_question_list %}
+                    <div class="col mt-5 mb-0">
+                        <div class="card h-100 py-3" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title y-100">{{question.question_text}}</h5>
+                                {% if question.available %}
+                                    <div class="alert alert-success position-relative" role="alert">
+                                        Polls available  
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-danger position-relative" role="alert">
+                                        Polls unavailable  
+                                    </div>
+                                {% endif %}
+                                <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary">View</a>
+                                <a href="{% url 'polls:results' question.id %}" class="btn btn-primary">Results</a>
                             </div>
-                        {% else %}
-                            <div class="alert alert-danger" role="alert">
-                                Polls unavailable  
-                            </div>
-                        {% endif %}
-                        <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary">View</a>
-                        <a href="{% url 'polls:results' question.id %}" class="btn btn-primary">Results</a>
+                        </div>
                     </div>
-                </div>
-            {% endfor %} 
+                {% endfor %}
+            </div>
+        </div> 
         {% else %}
             <p>No polls are available.</p>
         {% endif %}
