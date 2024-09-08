@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="container-fluid bg-white my-4 p-4 rounded-3">
+    <div class="container-fluid bg-white my-4 p-4 rounded-3 bg-opacity-75">
 
         {% include "base/message.html" %}
 
@@ -17,8 +17,8 @@
                 <legend><h1>{{ question.question_text }}</h1></legend>
                 
                 {% for choice in question.choice_set.all %}
-                    <input type="radio" class="form-check-input" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" {% if choice.id == previous_selected_id %}checked{% endif %}>
-                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+                    <input type="radio" class="form-check-input my-3" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" {% if choice.id == previous_selected_id %}checked{% endif %}>
+                    <label for="choice{{ forloop.counter }}" class="fs-4 my-2">{{ choice.choice_text }}</label><br>
                 {% endfor %}
 
                 <input type="submit" value="Vote" class="my-3 btn btn-primary">
