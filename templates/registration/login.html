@@ -7,11 +7,22 @@
     <div class="card-body">
       <h1 class="card-title mb-4">Login</h1>
 
+      {% include "base/message.html" %}
+
       <form method="post" class="form-signin">
         {% csrf_token %}
         {% comment %} {{ form.as_p }} {% endcomment %}
         {% comment %} <input id="inputUsername" class="form-control my-3" placeholder="Username" required="" autofocus="" type="username">
         <input id="inputPassword" class="form-control my-3" placeholder="Password" required="" type="password"> {% endcomment %}
+
+        {% if form.non_field_errors %}
+          <ul class='form-errors'>
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
 
         <input type="text" name="username" class="form-control my-3" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" aria-invalid="true" id="id_username" placeholder="username">
         <input type="password" name="password" class="form-control my-3" autocomplete="current-password" required="" aria-invalid="true" id="id_password" placeholder="Password">
@@ -21,7 +32,7 @@
       </form>
       <p class="m-auto px-3 py-2">Or</p>
       <a href="{% url 'polls:index'%}" class=""><button class="btn btn-primary">Continue as guest</button></a>
-      <a href="{% url 'polls:index'%}" class=""><button class="btn btn-success">Register</button></a>
+      <a href="{% url 'signup'%}" class=""><button class="btn btn-success">Register</button></a>
       
     </div>
   </div>
