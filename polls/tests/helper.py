@@ -60,7 +60,7 @@ def create_dummies_question_and_2_choice(
     
     return q, c1, c2
         
-def create_user(username="tester", password="hackmepls") -> User:
+def create_test_user(username="tester", password="hackmepls") -> User:
     """Create tester user where their name is tester and hackmepls as a password
 
     Args:

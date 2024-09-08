@@ -51,7 +51,7 @@ class QuestionDetailViewTests(TestCase):
     def test_authorized_user_must_able_to_visit_question_that_they_have_not_vote_yet(self):
         
         question, _, _ = create_dummies_question_and_2_choice()
-        user = create_user()
+        user = create_test_user()
         
         self.client.force_login(user)
         
@@ -62,7 +62,7 @@ class QuestionDetailViewTests(TestCase):
     def test_user_prev_choice_must_got_preselected(self):
         
         question, c1, _ = create_dummies_question_and_2_choice()
-        user = create_user()
+        user = create_test_user()
         
         self.client.force_login(user)
         

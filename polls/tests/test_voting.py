@@ -39,7 +39,7 @@ class VotingTest(TestCase):
         """
         Authorized user should be able to voted and vote result should be updated
         """
-        user = create_user()
+        user = create_test_user()
         self.client.force_login(user)
         
         _, dummies_choice1, _ = create_dummies_question_and_2_choice()
@@ -57,7 +57,7 @@ class VotingTest(TestCase):
         Authorized user should be able to change their voted and vote result should be updated
         """
         
-        user = create_user()
+        user = create_test_user()
         self.client.force_login(user)
         
         _, dummies_choice1, dummies_choice2 = create_dummies_question_and_2_choice()
@@ -77,8 +77,8 @@ class VotingTest(TestCase):
         Test case where multiple user has login and vote on the same polls and same question
         """
         
-        user1 = create_user("tester1")
-        user2 = create_user("tester2")
+        user1 = create_test_user("tester1")
+        user2 = create_test_user("tester2")
         
         _, dummies_choice1, dummies_choice2 = create_dummies_question_and_2_choice()
         
@@ -108,4 +108,18 @@ class VotingTest(TestCase):
         
         self.assertEqual(dummies_choice1.vote_set.count(), 0)
         self.assertEqual(dummies_choice2.vote_set.count(), 2)
+        
+    def test_user_vote_same_choice(self):
+        """
+        If user vote on same choice as previous vote, vote count must remain the same
+        """
+        user = create_test_user()
+        self.client.force_login(user)
+        
+        _, c1, _ = create_dummies_question_and_2_choice()
+        
+        user_vote(self.client, c1)
+        user_vote(self.client, c1)
+
+        self.assertEqual(c1.vote_set.count(), 1)
     
