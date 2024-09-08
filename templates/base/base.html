@@ -12,28 +12,30 @@
             <div class="container-fluid">
               <span class="navbar-brand mb-0 h1 m-2"><h1>KU-Polls</h1></span>
 
-              {% if user.is_authenticated %}
-                <form action="{% url 'logout' %}" method='post'>
-                  {% csrf_token %}
-                  <div class="row">
-                    <p class="col m-1 fs-3">{{user.username}}</p>
-                    <button type="submit" class="btn btn-danger col mx-3">Logout</button>
-                  </div>
-                </form>
-              {% else %}
-                <form action="{% url 'login' %}" method='get'>
-                  <div class="row">
-                    <p class="col m-1">To vote on polls please login</p>
-                    <button type="submit" class="btn btn-primary col mx-3">Login</button>
-                  </div>
-                </form>
+              {% if view.get_template_names.0 != "registration/login.html"%}
+                {% if user.is_authenticated %}
+                  <form action="{% url 'logout' %}" method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                      <p class="col m-1 fs-3">{{user.username}}</p>
+                      <button type="submit" class="btn btn-danger col mx-3">Logout</button>
+                    </div>
+                  </form>
+                {% else %}
+                  <form action="{% url 'login' %}" method='get'>
+                    <div class="row">
+                      <p class="col m-1">To vote on polls please login</p>
+                      <button type="submit" class="btn btn-primary col mx-3">Login</button>
+                    </div>
+                  </form>
+                {% endif %}
               {% endif %}
               
 
             </div>
         </nav>
     </head>
-    <body class="container-fluid .bg-black p-4" style="padding-top: 90px !important;">
+    <body class="container-fluid .bg-black p-4 h-100" style="padding-top: 90px !important;">
         {% block content %}{% endblock content %}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body> 
