@@ -149,7 +149,7 @@ def vote(request, question_id):
         messages.warning(request, "Polls does not exist")
         return HttpResponseRedirect(reverse("polls:index"), request)
 
-    if not question.is_published():
+    if not question.can_vote():
         messages.warning(request, "Polls is unavailable right now")
         return HttpResponseRedirect(reverse("polls:index"), request)
 
