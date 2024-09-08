@@ -29,7 +29,10 @@ python manage.py migrate
 
 Load data into database
 ```
-python manage.py loaddata data/polls-v2.json
+python manage.py loaddata data/polls-v3.json
+```
+```
+python manage.py loaddata data/users.json
 ```
 
 Configs
@@ -50,6 +53,13 @@ Initialize server
 ```bash
 python manage.py runserver
 ```
+
+## demo user
+| username | password | 
+|-------|-------| 
+| demo1 | hackme11 | 
+| demo2 | hackme22 | 
+| demo3 | hackme33 |
 
 ## Project documentation
 

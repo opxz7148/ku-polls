@@ -72,7 +72,11 @@ class Question(models.Model):
 
         return self.is_published() and (not self.is_end())
 
-
+    @property
+    def available(self) -> bool:
+        return self.can_vote()
+    
+    
 class Choice(models.Model):
     """
     Question Choice model

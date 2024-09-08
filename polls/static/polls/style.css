@@ -4,6 +4,7 @@ li a {
 
 html {
     background: url("images/stone-wall.jpg");
+    background-attachment: fixed;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

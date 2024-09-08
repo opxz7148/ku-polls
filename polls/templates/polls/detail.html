@@ -1,11 +1,14 @@
-{% extends "polls/layout.html" %}
+{% extends "base/base.html" %}
 
 {% block title %}
     {{ question.question_text  }}
 {% endblock title %}
 
 {% block content %}
-    <div class="container-fluid bg-white my-4 p-4">
+    <div class="container-fluid bg-white my-4 p-4 rounded-3 bg-opacity-75">
+
+        {% include "base/message.html" %}
+
         <form action="{% url 'polls:vote' question.id %}" method="post">
 
             {% csrf_token %}
@@ -14,16 +17,16 @@
                 <legend><h1>{{ question.question_text }}</h1></legend>
                 
                 {% for choice in question.choice_set.all %}
-                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+                    <input type="radio" class="form-check-input my-3" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" {% if choice.id == previous_selected_id %}checked{% endif %}>
+                    <label for="choice{{ forloop.counter }}" class="fs-4 my-2">{{ choice.choice_text }}</label><br>
                 {% endfor %}
-                {% if can_vote %}
-                <input type="submit" value="Vote" class="my-3">
-                {% endif %}
+
+                <input type="submit" value="Vote" class="my-3 btn btn-primary">
+
             </div>
 
         </form>
-        <a href="{% url 'polls:results' question.id%}"><button>View results</button></a>
-        <a href="{% url 'polls:index'%}" class="mx-3"><button>Back to poll list</button></a>
+        <a href="{% url 'polls:results' question.id%}"><button class="btn btn-primary">View results</button></a>
+        <a href="{% url 'polls:index'%}" class="mx-3"><button class="btn btn-primary">Back to poll list</button></a>
     </div>
 {% endblock content %}

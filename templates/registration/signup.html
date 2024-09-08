@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+
+  <div class="card position-absolute top-50 start-50 translate-middle bg-white p-3 rounded-3 w-75 mt-5" style="width: 18rem;">
+    <div class="card-body">
+      <h1 class="card-title mb-4">Signup</h1>
+
+      <form method="post" class="form-signin">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-success mt-3">Register</button>
+      </form>
+
+      <a href="{% url 'polls:index'%}" class=""><button class="btn btn-primary mt-3">Continue as guest</button></a>
+
+    </div>
+  </div>
+
+{% endblock content %}
