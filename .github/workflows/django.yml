@@ -28,7 +28,8 @@ jobs:
         pip install -r requirements.txt
     - name: Set up enviroments
       run: |
-        export SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}"
+        mv sample.env .env
+        echo SECRET_KEY="${{ secrets.DJANGO_SECRET_KEY }}" > .env
     - name: Run Tests
       run: |
         python manage.py test
