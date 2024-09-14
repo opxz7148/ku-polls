@@ -1,6 +1,6 @@
 # Polls web-application for KU community.
 
-[![Django CI](./actions/workflows/django.yml/badge.svg)](./actions/workflows/django.yml)
+[![Django CI](../../actions/workflows/django.yml/badge.svg)](../../actions/workflows/django.yml)
 
 KU-polls is a free minimal and easy to use web-application for conduct a poll or a surveys base on [Django Tutorial](https://docs.djangoproject.com/en/5.1/intro/tutorial01/). You're able to create and conduct a new poll with a start and expire date for each poll. ku-polls also collect a response data and summarize it for you.
 
