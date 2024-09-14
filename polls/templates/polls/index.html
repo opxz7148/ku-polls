@@ -10,13 +10,13 @@
         </div>
 
         {% if latest_question_list %}
-        <div class="container text-left my-2">
+        <div class="container text-left my-2 pb-5">
             <div class="row row-cols-4">
                 {% for question in latest_question_list %}
                     <div class="col mt-5 mb-0 resizable">
                         <div class="card h-100 py-3 resizable" style="width: 18rem;">
-                            <div class="card-body resizable">
-                                <h5 class="card-title y-100 resizable">{{question.question_text}}</h5>
+                            <div class="card-body resizable d-flex flex-column">
+                                <h5 class="card-title y-100 resizable flex-grow-1">{{question.question_text}}</h5>
                                 {% if question.available %}
                                     <div class="alert alert-success position-relative resizable" role="alert">
                                         Polls available  
@@ -26,8 +26,17 @@
                                         Polls unavailable  
                                     </div>
                                 {% endif %}
+                                <p>Publish: {{question.pub_date|date:'Y-m-d'}}</p>
+
+                                {% if question.has_end_date %}
+                                <p>Available until: {{question.end_date|date:'Y-m-d'}}</p>
+                                {% else %}
+                                <p>No end date</p>
+                                {% endif %}
+                                <div>
                                 <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary">View</a>
                                 <a href="{% url 'polls:results' question.id %}" class="btn btn-primary">Results</a>
+                                </div>
                             </div>
                         </div>
                     </div>

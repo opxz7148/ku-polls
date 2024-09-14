@@ -1,6 +1,4 @@
-"""
-File for create database model
-"""
+"""File for create database model"""
 
 import datetime
 from django.db import models
@@ -10,9 +8,7 @@ from django.contrib.auth.models import User
 
 
 class Question(models.Model):
-    """
-    Question model
-    """
+    """Question model"""
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField(
         "date published",
@@ -56,7 +52,6 @@ class Question(models.Model):
             bool:   False if current time is already pass question end date.
                     Otherwise return True
         """
-
         if self.end_date is None:
             return False
 
@@ -73,18 +68,23 @@ class Question(models.Model):
         return self.is_published() and (not self.is_end())
 
     @property
+    def has_end_date(self):
+        if self.end_date is None:
+            return False
+        return True
+
+    @property
     def available(self) -> bool:
         return self.can_vote()
-    
-    
+
+
 class Choice(models.Model):
-    """
-    Question Choice model
-    """
+    """Question Choice model."""
+    
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     # votes = models.IntegerField(default=0)
-    
+
     @property
     def votes(self) -> int:
         return self.vote_set.count()
@@ -94,11 +94,10 @@ class Choice(models.Model):
 
 
 class Vote(models.Model):
-    """
-    A vote by user.
-    """
+    """A vote by user."""
+
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     def __str__(self) -> str:
         return self.choice_text
