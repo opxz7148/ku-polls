@@ -9,6 +9,11 @@ Powered by Python with Django web framework
 This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.th).
 
+## Requirement
+```
+python version 3.11
+```
+
 ## Installation & Setup guide
 Follow [Installation & Setup guide](./installation.md) to install, setup and config the application.
 

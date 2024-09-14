@@ -1,11 +1,13 @@
 # Installation & Setup guide
 
-Clone repositories
-```
-git clone https://github.com/opxz7148/ku-polls.git
-```
+## Requirement
+* Python 3.11 or higher
+* git
+* pip
 
-Change current directories
+
+## Installation guide
+Change directories to work directories
 ```bash
 cd ku-polls
 ```
@@ -54,7 +56,7 @@ python manage.py loaddata data/votes-v4.json
 
 Configs
 
-rename sample.env to .env
+Rename sample.env to .env
 ```
 mv sample.env .env
 ```
