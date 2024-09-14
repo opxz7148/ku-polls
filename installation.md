@@ -1,17 +1,22 @@
 # Installation & Setup guide
 
-Change directories to work directories
+Clone repositories
+```
+git clone https://github.com/opxz7148/ku-polls.git
+```
+
+Change current directories
 ```bash
 cd ku-polls
 ```
 
-Create virtual enviroment
+Create virtual environment
 
 ```
-python -m venv .venv
+python -m venv env
 ```
 
-Activate virtual enviroments
+Activate virtual environments
 
 * Window
     ```
