@@ -114,7 +114,7 @@ LOGOUT_REDIRECT_URL = 'polls:index'       # after logout, return to login page
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = config('TIME_ZONE')
+TIME_ZONE = config('TIME_ZONE', default="Asia/Bangkok")
 
 USE_I18N = True
 
