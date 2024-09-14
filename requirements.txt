@@ -1,2 +1,4 @@
+python >= 3.11
 Django >= 5.1, <5.2
 python-decouple
+whitenoise
