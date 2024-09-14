@@ -1,17 +1,24 @@
 # Installation & Setup guide
 
+## Requirement
+* Python 3.11 or higher
+* git
+* pip
+
+
+## Installation guide
 Change directories to work directories
 ```bash
 cd ku-polls
 ```
 
-Create virtual enviroment
+Create virtual environment
 
 ```
-python -m venv .venv
+python -m venv env
 ```
 
-Activate virtual enviroments
+Activate virtual environments
 
 * Window
     ```
@@ -49,7 +56,7 @@ python manage.py loaddata data/votes-v4.json
 
 Configs
 
-rename sample.env to .env
+Rename sample.env to .env
 ```
 mv sample.env .env
 ```

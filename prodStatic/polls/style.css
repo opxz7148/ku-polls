@@ -1,0 +1,28 @@
+li a {
+    color: black;
+}
+
+html {
+    background: url("images/stone-wall.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: transparent !important; 
+}
+
+.messages
+{
+    color: red;
+}
+
+.resizable {
+  position: relative;
+  overflow: auto; /* Ensures content is scrollable if it overflows */
+  max-width: 100%; /* Prevents the card from expanding beyond its container */
+}

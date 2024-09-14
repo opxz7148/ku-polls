@@ -95,8 +95,8 @@ class DetailView(generic.DetailView):
         """Check does polls available or not before do anything else."""
         try:
             question = self.get_object()
-        except Exception as r:
-            messages.warning(request, "Polls is unavailable right now %s", r)
+        except Exception:
+            messages.warning(request, "Polls is unavailable right now")
             return HttpResponseRedirect(reverse("polls:index"), request)
 
         if question.is_published():

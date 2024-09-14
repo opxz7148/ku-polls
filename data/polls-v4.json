@@ -12,7 +12,7 @@
   "model": "polls.question",
   "pk": 3,
   "fields": {
-    "question_text": "How you traverse to university",
+    "question_text": "How you traverse to university?",
     "pub_date": "2024-08-25T11:28:32.243Z",
     "end_date": null
   }
@@ -21,7 +21,7 @@
   "model": "polls.question",
   "pk": 16,
   "fields": {
-    "question_text": "What is you favourite fiction genre",
+    "question_text": "What's you favourite fiction genre?",
     "pub_date": "2024-09-14T07:29:12.181Z",
     "end_date": null
   }
@@ -30,7 +30,7 @@
   "model": "polls.question",
   "pk": 18,
   "fields": {
-    "question_text": "What is you favourite chat application",
+    "question_text": "What's you favourite chat application?",
     "pub_date": "2024-09-11T07:46:07.097Z",
     "end_date": "2024-09-24T07:46:07.097Z"
   }
@@ -39,7 +39,7 @@
   "model": "polls.question",
   "pk": 19,
   "fields": {
-    "question_text": "How do you feel at the end of ISP class",
+    "question_text": "How do you feel at the end of ISP class?",
     "pub_date": "2024-09-13T07:53:46.878Z",
     "end_date": "2024-09-19T07:53:46.879Z"
   }
@@ -48,7 +48,7 @@
   "model": "polls.question",
   "pk": 20,
   "fields": {
-    "question_text": "After a long week of work, where you would like to take a rest",
+    "question_text": "After a long week of work, where you would like to take a rest?",
     "pub_date": "2024-09-04T08:04:19.801Z",
     "end_date": "2024-10-04T08:04:19.801Z"
   }
@@ -57,7 +57,7 @@
   "model": "polls.question",
   "pk": 21,
   "fields": {
-    "question_text": "What is your favourite media straming service",
+    "question_text": "What is your favourite media straming service?",
     "pub_date": "2024-09-09T08:17:18.819Z",
     "end_date": "2024-09-13T08:17:18.820Z"
   }
@@ -66,7 +66,7 @@
   "model": "polls.question",
   "pk": 22,
   "fields": {
-    "question_text": "What is your favourite PC components brand",
+    "question_text": "What is your favourite PC components brand?",
     "pub_date": "2024-08-30T08:24:37.101Z",
     "end_date": "2024-09-11T08:24:37.101Z"
   }
