@@ -19,7 +19,7 @@ Initialize server
 python manage.py runserver
 ```
 
-## demo user
+## Demo user
 | username | password | 
 |-------|-------| 
 | demo1 | hackme11 | 
