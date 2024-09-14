@@ -20,3 +20,9 @@ body {
 {
     color: red;
 }
+
+.resizable {
+  position: relative;
+  overflow: auto; /* Ensures content is scrollable if it overflows */
+  max-width: 100%; /* Prevents the card from expanding beyond its container */
+}
