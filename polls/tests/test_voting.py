@@ -1,17 +1,10 @@
-"""
-Polls app test file
-"""
+"""Polls app test file"""
 
 import datetime
 
 from django.test import TestCase
-from django.utils import timezone
 from django.urls import reverse
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.test import Client
 
-from polls.models import Question, Choice, Vote
 from .helper import *
 
 
@@ -34,7 +27,23 @@ class VotingTest(TestCase):
             response,
             expected_url=f"/accounts/login/?next=/polls/{dummies_question.id}/vote/"
         )
+    
+    def test_user_get_request_to_vote_should_redirect(self):
+        """
+        Application must redirect visitor back to index if they try to reach vote by get request
+        """
+        q, _, _ = create_dummies_question_and_2_choice()
         
+        user = create_test_user()
+        self.client.force_login(user)
+        
+        url = reverse('polls:vote', args=(q.id,))
+        response = self.client.get(url)
+        self.assertRedirects(
+            response,
+            expected_url="/polls/"
+        )
+    
     def test_authorized_user_can_vote(self):
         """
         Authorized user should be able to voted and vote result should be updated
@@ -122,4 +131,5 @@ class VotingTest(TestCase):
         user_vote(self.client, c1)
 
         self.assertEqual(c1.vote_set.count(), 1)
+        
     

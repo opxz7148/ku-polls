@@ -1,3 +1,5 @@
+"""Module for set up URL path and it's handler."""
+
 from django.urls import path
 
 from . import views

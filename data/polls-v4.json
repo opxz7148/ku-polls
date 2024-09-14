@@ -1,0 +1,698 @@
+[
+{
+  "model": "polls.question",
+  "pk": 2,
+  "fields": {
+    "question_text": "What's your favourite genre of music?",
+    "pub_date": "2024-08-25T11:27:23.439Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 3,
+  "fields": {
+    "question_text": "How you traverse to university",
+    "pub_date": "2024-08-25T11:28:32.243Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 16,
+  "fields": {
+    "question_text": "What is you favourite fiction genre",
+    "pub_date": "2024-09-14T07:29:12.181Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 18,
+  "fields": {
+    "question_text": "What is you favourite chat application",
+    "pub_date": "2024-09-11T07:46:07.097Z",
+    "end_date": "2024-09-24T07:46:07.097Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 19,
+  "fields": {
+    "question_text": "How do you feel at the end of ISP class",
+    "pub_date": "2024-09-13T07:53:46.878Z",
+    "end_date": "2024-09-19T07:53:46.879Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 20,
+  "fields": {
+    "question_text": "After a long week of work, where you would like to take a rest",
+    "pub_date": "2024-09-04T08:04:19.801Z",
+    "end_date": "2024-10-04T08:04:19.801Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 21,
+  "fields": {
+    "question_text": "What is your favourite media straming service",
+    "pub_date": "2024-09-09T08:17:18.819Z",
+    "end_date": "2024-09-13T08:17:18.820Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 22,
+  "fields": {
+    "question_text": "What is your favourite PC components brand",
+    "pub_date": "2024-08-30T08:24:37.101Z",
+    "end_date": "2024-09-11T08:24:37.101Z"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 5,
+  "fields": {
+    "question": 2,
+    "choice_text": "Rock"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 6,
+  "fields": {
+    "question": 2,
+    "choice_text": "Pop"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 7,
+  "fields": {
+    "question": 2,
+    "choice_text": "Jazz"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 8,
+  "fields": {
+    "question": 2,
+    "choice_text": "Hip-Hop"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 9,
+  "fields": {
+    "question": 2,
+    "choice_text": "Bossa Nova"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 10,
+  "fields": {
+    "question": 2,
+    "choice_text": "R&B"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 11,
+  "fields": {
+    "question": 2,
+    "choice_text": "Ballad"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 12,
+  "fields": {
+    "question": 2,
+    "choice_text": "Reggae"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 13,
+  "fields": {
+    "question": 2,
+    "choice_text": "Folk"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 14,
+  "fields": {
+    "question": 3,
+    "choice_text": "Walk"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 15,
+  "fields": {
+    "question": 3,
+    "choice_text": "BTS"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 16,
+  "fields": {
+    "question": 3,
+    "choice_text": "Car"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 17,
+  "fields": {
+    "question": 3,
+    "choice_text": "Motercycle"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 18,
+  "fields": {
+    "question": 3,
+    "choice_text": "Bus"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 19,
+  "fields": {
+    "question": 2,
+    "choice_text": "Classic"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 21,
+  "fields": {
+    "question": 2,
+    "choice_text": "Blues"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 22,
+  "fields": {
+    "question": 3,
+    "choice_text": "Red line train"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 23,
+  "fields": {
+    "question": 3,
+    "choice_text": "Scooter"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 24,
+  "fields": {
+    "question": 16,
+    "choice_text": "Science Fiction"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 25,
+  "fields": {
+    "question": 16,
+    "choice_text": "Fantasy"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 26,
+  "fields": {
+    "question": 16,
+    "choice_text": "Horror"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 27,
+  "fields": {
+    "question": 16,
+    "choice_text": "Mystery"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 28,
+  "fields": {
+    "question": 16,
+    "choice_text": "Romance"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 29,
+  "fields": {
+    "question": 16,
+    "choice_text": "Thriller"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 30,
+  "fields": {
+    "question": 16,
+    "choice_text": "Crime"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 31,
+  "fields": {
+    "question": 16,
+    "choice_text": "Young Adult"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 32,
+  "fields": {
+    "question": 16,
+    "choice_text": "Historical"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 33,
+  "fields": {
+    "question": 18,
+    "choice_text": "Line"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 34,
+  "fields": {
+    "question": 18,
+    "choice_text": "Facebook messenger"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 35,
+  "fields": {
+    "question": 18,
+    "choice_text": "Discord"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 36,
+  "fields": {
+    "question": 18,
+    "choice_text": "Slack"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 37,
+  "fields": {
+    "question": 18,
+    "choice_text": "Wechat"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 38,
+  "fields": {
+    "question": 18,
+    "choice_text": "Whatapps"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 39,
+  "fields": {
+    "question": 18,
+    "choice_text": "BeeTalk"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 40,
+  "fields": {
+    "question": 18,
+    "choice_text": "Tinder"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 41,
+  "fields": {
+    "question": 18,
+    "choice_text": "Microsoft Team"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 42,
+  "fields": {
+    "question": 18,
+    "choice_text": "Telegram"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 43,
+  "fields": {
+    "question": 19,
+    "choice_text": "Finally!"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 44,
+  "fields": {
+    "question": 19,
+    "choice_text": "I want to learn more"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 45,
+  "fields": {
+    "question": 19,
+    "choice_text": "It's really hard to keep my eyes open"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 46,
+  "fields": {
+    "question": 19,
+    "choice_text": "I need to finish this homework tonight"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 47,
+  "fields": {
+    "question": 19,
+    "choice_text": "I'm hungry"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 48,
+  "fields": {
+    "question": 19,
+    "choice_text": "Why am I still here?"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 49,
+  "fields": {
+    "question": 19,
+    "choice_text": "I will review this tonight"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 50,
+  "fields": {
+    "question": 19,
+    "choice_text": "I really enjoy this class"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 51,
+  "fields": {
+    "question": 19,
+    "choice_text": "Wow that's interesting"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 52,
+  "fields": {
+    "question": 20,
+    "choice_text": "In the bed"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 53,
+  "fields": {
+    "question": 20,
+    "choice_text": "The beach"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 54,
+  "fields": {
+    "question": 20,
+    "choice_text": "In the forest"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 55,
+  "fields": {
+    "question": 20,
+    "choice_text": "Top of the moutain"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 56,
+  "fields": {
+    "question": 20,
+    "choice_text": "Night market"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 57,
+  "fields": {
+    "question": 20,
+    "choice_text": "Cozy Cafe"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 58,
+  "fields": {
+    "question": 20,
+    "choice_text": "Luxury Restaurants"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 59,
+  "fields": {
+    "question": 20,
+    "choice_text": "Park"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 60,
+  "fields": {
+    "question": 21,
+    "choice_text": "Youtube"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 61,
+  "fields": {
+    "question": 21,
+    "choice_text": "Netflix"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 62,
+  "fields": {
+    "question": 21,
+    "choice_text": "Disneyplus"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 63,
+  "fields": {
+    "question": 21,
+    "choice_text": "HBO Go"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 64,
+  "fields": {
+    "question": 21,
+    "choice_text": "Spotify"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 65,
+  "fields": {
+    "question": 21,
+    "choice_text": "SoundCloud"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 66,
+  "fields": {
+    "question": 21,
+    "choice_text": "Prime Video"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 67,
+  "fields": {
+    "question": 21,
+    "choice_text": "IQIYI"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 68,
+  "fields": {
+    "question": 21,
+    "choice_text": "Billili"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 69,
+  "fields": {
+    "question": 21,
+    "choice_text": "Tidal"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 70,
+  "fields": {
+    "question": 22,
+    "choice_text": "Asus"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 71,
+  "fields": {
+    "question": 22,
+    "choice_text": "MSI"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 72,
+  "fields": {
+    "question": 22,
+    "choice_text": "Gigabyte"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 73,
+  "fields": {
+    "question": 22,
+    "choice_text": "ROG"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 74,
+  "fields": {
+    "question": 22,
+    "choice_text": "Aorus"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 75,
+  "fields": {
+    "question": 22,
+    "choice_text": "EVGA"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 76,
+  "fields": {
+    "question": 22,
+    "choice_text": "Corsair"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 77,
+  "fields": {
+    "question": 22,
+    "choice_text": "HyperX"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 78,
+  "fields": {
+    "question": 22,
+    "choice_text": "Kingston"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 79,
+  "fields": {
+    "question": 22,
+    "choice_text": "Western Digital"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 80,
+  "fields": {
+    "question": 22,
+    "choice_text": "Seagate"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 81,
+  "fields": {
+    "question": 22,
+    "choice_text": "Cooler Master"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 82,
+  "fields": {
+    "question": 22,
+    "choice_text": "NZXT"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 83,
+  "fields": {
+    "question": 22,
+    "choice_text": "Galax"
+  }
+}
+]

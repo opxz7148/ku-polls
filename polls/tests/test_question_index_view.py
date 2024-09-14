@@ -5,13 +5,8 @@ Polls app test file
 import datetime
 
 from django.test import TestCase
-from django.utils import timezone
 from django.urls import reverse
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.test import Client
 
-from polls.models import Question, Choice, Vote
 from .helper import *
 
 

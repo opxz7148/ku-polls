@@ -1,0 +1,154 @@
+[
+{
+  "model": "polls.vote",
+  "pk": 1,
+  "fields": {
+    "choice": 17,
+    "user": 2
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 2,
+  "fields": {
+    "choice": 17,
+    "user": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 3,
+  "fields": {
+    "choice": 11,
+    "user": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 4,
+  "fields": {
+    "choice": 18,
+    "user": 10
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 5,
+  "fields": {
+    "choice": 24,
+    "user": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 6,
+  "fields": {
+    "choice": 44,
+    "user": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 7,
+  "fields": {
+    "choice": 34,
+    "user": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 8,
+  "fields": {
+    "choice": 57,
+    "user": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 9,
+  "fields": {
+    "choice": 29,
+    "user": 10
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 10,
+  "fields": {
+    "choice": 46,
+    "user": 10
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 11,
+  "fields": {
+    "choice": 42,
+    "user": 10
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 12,
+  "fields": {
+    "choice": 54,
+    "user": 10
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 13,
+  "fields": {
+    "choice": 5,
+    "user": 10
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 14,
+  "fields": {
+    "choice": 27,
+    "user": 11
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 15,
+  "fields": {
+    "choice": 50,
+    "user": 11
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 16,
+  "fields": {
+    "choice": 35,
+    "user": 11
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 17,
+  "fields": {
+    "choice": 55,
+    "user": 11
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 18,
+  "fields": {
+    "choice": 22,
+    "user": 11
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 19,
+  "fields": {
+    "choice": 6,
+    "user": 11
+  }
+}
+]
