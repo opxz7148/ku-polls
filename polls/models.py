@@ -82,7 +82,7 @@ class Question(models.Model):
 
 class Choice(models.Model):
     """Question Choice model."""
-    
+
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     # votes = models.IntegerField(default=0)
@@ -106,4 +106,3 @@ class Vote(models.Model):
     def __str__(self) -> str:
         """Return choice test."""
         return self.choice_text
-    

@@ -232,12 +232,8 @@ def vote(request, question_id):
         vote = this_user.vote_set.get(choice__question=question)
         previous_choice = vote.choice.choice_text
 
-        # If user selected same choice, do nothing
-        if vote.choice != selected_choice:
-
-            # Otherwise change selected choice
-            vote.choice = selected_choice
-            vote.save()
+        vote.choice = selected_choice
+        vote.save()
 
         # Log user vote
         log_string = "User {} change vote from {} to {} for question {}"
