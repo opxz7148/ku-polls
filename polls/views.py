@@ -96,7 +96,7 @@ class DetailView(generic.DetailView):
         try:
             question = self.get_object()
         except Exception:
-            messages.warning(request, "Polls is unavailable right now")
+            messages.warning(request, "Polls doesn't exist")
             return HttpResponseRedirect(reverse("polls:index"), request)
 
         if question.is_published():
@@ -146,7 +146,7 @@ class ResultsView(generic.DetailView):
         try:
             question = self.get_object()
         except Exception:
-            messages.warning(request, "Polls is unavailable right now")
+            messages.warning(request, "Polls doesn't exist")
             return HttpResponseRedirect(reverse("polls:index"), request)
 
         if question.is_published():
@@ -178,17 +178,21 @@ def vote(request, question_id):
     try:
         question = get_object_or_404(Question, pk=question_id)
         q_text = question.question_text
+    # If not, redirect user to index page and warn them
     except Question.DoesNotExist as err:
 
         logger.exception(f"Non-existent question {question_id} %s", err)
 
-        messages.warning(request, "Polls does not exist")
+        messages.warning(request, "Polls doesn't exist")
         return HttpResponseRedirect(reverse("polls:index"), request)
 
+    # Check does question are available to vote or not.
+    # if not, redirect and warn user
     if not question.can_vote():
         messages.warning(request, "Polls is unavailable right now")
         return HttpResponseRedirect(reverse("polls:index"), request)
 
+    # Try to get user choice from request
     try:
         selected_choice = question.choice_set.get(  # type: ignore
                 pk=request.POST["choice"]
@@ -228,12 +232,8 @@ def vote(request, question_id):
         vote = this_user.vote_set.get(choice__question=question)
         previous_choice = vote.choice.choice_text
 
-        # If user selected same choice, do nothing
-        if vote.choice != selected_choice:
-
-            # Otherwise change selected choice
-            vote.choice = selected_choice
-            vote.save()
+        vote.choice = selected_choice
+        vote.save()
 
         # Log user vote
         log_string = "User {} change vote from {} to {} for question {}"
@@ -259,7 +259,6 @@ def vote(request, question_id):
         Vote.objects.create(user=this_user, choice=selected_choice)
 
         # Log user vote
-
         logger.exception(
             f"User {username} never vote for question {q_text} %s",
             err
