@@ -19,6 +19,9 @@ jobs:
       - name: Install dependencies
         run: pip install coverage
 
+      - name: Install dependencies
+        run: pip install django
+
       - name: Run tests
         run: coverage run manage.py test
 
