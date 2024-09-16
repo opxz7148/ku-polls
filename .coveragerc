@@ -6,9 +6,7 @@ cover_pylib = False
 
 # explicitly include the main app
 include =
-    polls/views.py
-    polls/models.py
-    polls/urls.py
+    polls/*.py
 
 # omit uninteresting stuff
 omit =
@@ -19,6 +17,8 @@ omit =
     tests/*.py            # omit unit test files and directories
     __init__.py           # omit __init__.py files
     env/*                 # omit environment file
+    polls/admin.py
+    polls/apps.py
 
 # in the report, exclude some methods we don't need to test
 [report]
