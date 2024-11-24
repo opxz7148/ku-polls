@@ -12,7 +12,7 @@ services:
     environment:
       POSTGRES_USER: "${DATABASE_USER?:DB_USER not set}"
       POSTGRES_PASSWORD: "${DATABASE_PASSWORD?:DB_PWD not set}"
-      POSTGRES_DB: "ohmdb"
+      POSTGRES_DB: "${DATABASE_NAME?:DB_NAME not set}"
     volumes:
       - ./db:/var/lib/postgressql/data
     deploy:
@@ -25,7 +25,7 @@ services:
       args:
         SECRET_KEY: ${SECRET_KEY}
     image: ku-polls
-    command: 
+    command:
       - /bin/sh
       - -c
       - |
@@ -36,6 +36,7 @@ services:
       SECRET_KEY: "${SECRET_KEY?:SECRET_KEY not set}"
       DATABASE_USERNAME: "${DATABASE_USER?:DB_USER not set}"
       DATABASE_PASSWORD: "${DATABASE_PASSWORD?:DB_PWD not set}"
+      DATABASE_NAME: "${DATABASE_NAME}"
       DATABASE_HOST: db
       DATABASE_PORT: 5432
     links:
